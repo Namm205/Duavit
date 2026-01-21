@@ -1,0 +1,91 @@
+/* --- GIỮ NGUYÊN TẤT CẢ CODE CŨ --- */
+/* Chỉ thêm các đoạn mới dưới đây vào cuối file hoặc chép đè */
+
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; background-color: #222; font-family: Arial, sans-serif; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; transition: background-color 0.5s; }
+
+.main-container { background: #fff; width: 99%; height: 98vh; padding: 10px; border-radius: 8px; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.8); position: relative; z-index: 10; }
+
+/* HEADER */
+.header { position: relative; height: 50px; margin-bottom: 5px; background-color: transparent; display: flex; align-items: center; }
+.tools-group { position: absolute; left: 10px; display: flex; gap: 5px; z-index: 100; }
+.subject-name { position: absolute; left: 20%; transform: translateX(-50%); font-size: 20px; font-weight: 900; color: #d32f2f; text-transform: uppercase; text-shadow: 1px 1px 0px #fff; white-space: nowrap; }
+#status { position: absolute; left: 50%; transform: translateX(-50%); font-size: 20px; font-weight: bold; color: #555; text-transform: uppercase; white-space: nowrap; }
+.team-name { position: absolute; right: 20%; transform: translateX(50%); font-size: 20px; font-weight: 900; color: #d32f2f; text-transform: uppercase; text-shadow: 1px 1px 0px #fff; white-space: nowrap; }
+
+.btn-tool { width: 35px; height: 35px; padding: 0; cursor: pointer; background: #555; color: white; border: none; border-radius: 5px; font-weight: bold; font-size: 18px; display: flex; justify-content: center; align-items: center; transition: background 0.2s; }
+.btn-tool:hover { background: #333; transform: scale(1.1); }
+
+/* TRACK */
+.track-board { flex-grow: 1; position: relative; border: 4px solid #333; border-radius: 4px; background-image: url('duongdua.png'); background-size: 100% 100%; background-repeat: no-repeat; overflow: hidden; transition: filter 0.5s; }
+.spectator-area { position: absolute; top: 1%; left: 0; width: 100%; height: 20%; display: flex; justify-content: space-around; align-items: flex-end; z-index: 5; pointer-events: none; }
+.fan { height: 70px; width: auto; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); }
+.fan-jump { animation: jumpCheer 0.5s infinite alternate; }
+.fan-shake { animation: shakeCheer 0.6s infinite alternate; }
+@keyframes jumpCheer { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
+@keyframes shakeCheer { 0% { transform: rotate(-10deg); } 100% { transform: rotate(10deg); } }
+
+.race-area { position: absolute; width: 100%; top: 33%; height: 55%; display: flex; flex-direction: column; }
+.lane { flex: 1; position: relative; display: flex; align-items: center; }
+
+/* VỊT */
+.duck { position: absolute; left: 0; width: 90px; z-index: 10; transition: left 0.05s linear; display: flex; flex-direction: column; align-items: center; }
+@keyframes vitBoi { 0% { transform: translateY(0) rotate(0deg); } 25% { transform: translateY(-3px) rotate(-2deg); } 50% { transform: translateY(0) rotate(0deg); } 75% { transform: translateY(3px) rotate(2deg); } 100% { transform: translateY(0) rotate(0deg); } }
+.duck img { width: 100%; height: auto; filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.6)); animation: vitBoi 0.5s infinite linear; }
+.name-input { position: absolute; top: -30px; width: 120px; text-align: center; background: #d32f2f; color: white; border: 2px solid white; border-radius: 15px; font-size: 12px; font-weight: bold; padding: 2px 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); outline: none; z-index: 20; }
+.status-icon { position: absolute; top: 10px; right: 0; font-size: 24px; font-weight: bold; text-shadow: 0 0 5px white; z-index: 30; animation: popIn 0.3s; }
+
+/* --- QUAN TRỌNG: CLASS ĐỂ ẨN VỊT BỊ LOẠI --- */
+.duck.eliminated {
+    display: none !important; /* Ẩn hoàn toàn */
+}
+/* ------------------------------------------ */
+
+.commentary-box { text-align: center; background: #f8f9fa; font-size: 26px; font-weight: bold; color: #0056b3; height: 60px; padding: 0 20px; border-top: 2px solid #ccc; border-bottom: 2px solid #ccc; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+.finish-line-marker { display: none; }
+
+.btn-start { margin-top: 10px; padding: 10px; font-size: 22px; font-weight: bold; color: white; background: linear-gradient(to right, #ff416c, #ff4b2b); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 100; }
+.btn-start:disabled { background: #ccc; cursor: default; }
+
+#victory-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: flex; justify-content: center; align-items: center; z-index: 999; opacity: 1; transition: opacity 0.3s ease; }
+#victory-overlay.hidden { opacity: 0; pointer-events: none; }
+.victory-box { position: relative; background: linear-gradient(45deg, #FFD700, #FF8C00); padding: 30px 50px; border-radius: 20px; text-align: center; color: #fff; box-shadow: 0 0 50px rgba(255, 215, 0, 0.8); border: 5px solid #fff; animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); min-width: 400px; }
+.btn-close { position: absolute; top: -15px; right: -15px; width: 40px; height: 40px; background-color: #ff4444; color: white; font-size: 24px; font-weight: bold; border: 3px solid white; border-radius: 50%; cursor: pointer; }
+
+/* --- STYLE CHO CÁC NÚT LỰA CHỌN MỚI --- */
+.victory-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+.btn-action {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+}
+.btn-action:active { transform: translateY(4px); box-shadow: none; }
+.btn-keep { background-color: #28a745; } /* Màu xanh */
+.btn-eliminate { background-color: #dc3545; } /* Màu đỏ */
+/* -------------------------------------- */
+
+@keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+/* NIGHT MODE & RAIN... (Giữ nguyên) */
+body.night-mode { background-color: #000; }
+body.night-mode .track-board { filter: brightness(0.5) contrast(1.2); border-color: #555; }
+body.night-mode .spectator-area { filter: brightness(0.5); }
+body.night-mode .duck img { filter: drop-shadow(0 0 10px rgba(255, 255, 0, 0.8)) brightness(1.3); }
+body.night-mode .commentary-box { background: #222; color: #00ff00; border-color: #444; }
+body.night-mode .team-name { text-shadow: 0 0 10px #ff0000; }
+body.night-mode .subject-name { text-shadow: 0 0 10px #007bff; }
+
+
+#camera-flash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; opacity: 0; pointer-events: none; z-index: 9999; transition: opacity 0.1s ease-out; }
+.flash-active { opacity: 0.8 !important; }

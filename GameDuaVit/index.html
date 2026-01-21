@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta property="og:title" content="Trò chơi Đua Vịt" />
+    <meta property="og:description" content="Minigame Đua Vịt Nhóm 4" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gameduavitnhom4.netlify.app" />
+
+    <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/2663/2663067.png" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div class="rain-container" id="rainEffect"></div>
+    <div id="camera-flash"></div>
+
+    <div class="main-container">
+        
+        <div class="header">
+            <div class="tools-group">
+                <button id="btnFullscreen" class="btn-tool" title="Toàn màn hình">⛶</button>
+                <button id="btnNightMode" class="btn-tool" onclick="toggleNightMode()" title="Chế độ đêm">🌙</button>
+                <button id="btnReset" class="btn-tool" onclick="hoiSinhVit()" title="Hồi sinh tất cả" style="background:#d32f2f;">↺</button>
+            </div>
+
+            <div class="subject-name">MÔN: Quản Trị Nhân Lực</div>
+            <div id="status">Sẵn sàng...</div>
+            <div class="team-name">🏆 Nhóm 4 🏆</div>
+        </div>
+
+        <div class="track-board" id="track">
+            <div class="spectator-area">
+                <img src="khangia1.png" class="fan">
+                <img src="khangia2.png" class="fan">
+                <img src="khangia3.png" class="fan">
+                <img src="khangia4.png" class="fan">
+                <img src="khangia5.png" class="fan">
+                <img src="khangia6.png" class="fan">
+                <img src="khangia7.png" class="fan">
+            </div>
+
+            <div class="race-area">
+                <div class="lane"><div class="duck" id="duck1"><div class="status-icon"></div><img src="vit1.png"><input type="text" class="name-input" value="Vịt 1"></div></div>
+                <div class="lane"><div class="duck" id="duck2"><div class="status-icon"></div><img src="vit2.png"><input type="text" class="name-input" value="Vịt 2"></div></div>
+                <div class="lane"><div class="duck" id="duck3"><div class="status-icon"></div><img src="vit3.png"><input type="text" class="name-input" value="Vịt 3"></div></div>
+                <div class="lane"><div class="duck" id="duck4"><div class="status-icon"></div><img src="vit4.png"><input type="text" class="name-input" value="Vịt 4"></div></div>
+                <div class="lane"><div class="duck" id="duck5"><div class="status-icon"></div><img src="vit5.png"><input type="text" class="name-input" value="Vịt 5"></div></div>
+                <div class="lane"><div class="duck" id="duck6"><div class="status-icon"></div><img src="vit6.png"><input type="text" class="name-input" value="Vịt 6"></div></div>
+                <div class="lane"><div class="duck" id="duck7"><div class="status-icon"></div><img src="vit7.png"><input type="text" class="name-input" value="Vịt 7"></div></div>
+            </div>
+            
+            <div class="finish-line-marker"></div>
+        </div>
+
+        <div class="commentary-box">
+            🎤 <span id="commentary-text">Chào mừng đến với giải đua vịt mở rộng!</span>
+        </div>
+
+        <button onclick="batDauDua()" class="btn-start" id="mainBtn">🏁 XUẤT PHÁT! 🏁</button>
+
+        <div id="victory-overlay" class="hidden">
+            <div class="victory-box">
+                <button onclick="dongBangThongBao()" class="btn-close">&times;</button>
+                
+                <h1>🎉 CHÚC MỪNG! 🎉</h1>
+                <h2 id="winner-name">XXX VÔ ĐỊCH</h2>
+                
+                <p style="margin-bottom: 15px;">Bạn muốn làm gì với nhà vô địch?</p>
+
+                <div class="victory-actions">
+                    <button class="btn-action btn-keep" onclick="quyetDinhSoPhan(false)">✅ Vẫn cho thi tiếp</button>
+                    <button class="btn-action btn-eliminate" onclick="quyetDinhSoPhan(true)">❌ Loại khỏi giải</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
