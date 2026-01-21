@@ -1,0 +1,5 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "frame-ancestors 'self' https://*.canva.com https://canva.com"
+    Access-Control-Allow-Origin = "*"
